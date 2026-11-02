@@ -35,8 +35,12 @@ all: init \
 .PHONY: init
 init:
 	git submodule update --init --recursive --force
+	cd libsid && git fetch origin && git checkout $(LIBSID_VERSION)
+	cd sysflow && git fetch origin && git checkout feature/proc-selabel
 	#cd falco && git fetch origin && git checkout $(FALCO_VERSION)
 	#cd falco-driver && git fetch origin && git checkout $(FALCO_LIBS_DRIVER_VERSION)
+	cd falco-libs && git fetch origin && git checkout $(FALCO_LIBS_BRANCH)
+	cd falco-driver && git fetch origin && git checkout $(FALCO_LIBS_BRANCH)
 	cd avro && git fetch origin && git checkout $(AVRO_VERSION)
 	cd elfutils && git fetch origin && git checkout $(ELFUTILS_VERSION)
 	cd glog && git fetch origin && git checkout $(GLOG_VERSION)
