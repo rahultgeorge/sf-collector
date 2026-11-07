@@ -155,8 +155,10 @@ falcolibs/package:
 	cp openssl-prefix/src/openssl/target/lib/*.a lib/ && \
 	cp zlib-prefix/src/zlib/libz.a lib/libz.a
 ifeq ($(BUNDLE_FALCO_LIBS), 1)	
-	cp -r falco-libs/build/lib falco-libs/build/bundle
-	cp falco-libs.mri falco-libs/build/bundle 
+	rm -rf falco-libs/build/bundle
+	mkdir -p falco-libs/build/bundle
+	cp falco-libs/build/lib/*.a falco-libs/build/bundle/
+	cp falco-libs.mri falco-libs/build/bundle/
 	cd falco-libs/build/bundle && \
 	mv libgrpc++.a libgrpcpp.a && \
 	mv libgrpc++_alts.a libgrpcpp_alts.a && \
