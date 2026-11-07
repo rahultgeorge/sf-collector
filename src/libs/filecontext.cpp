@@ -67,7 +67,8 @@ FileObj *FileContext::createFile(sinsp_evt *ev, std::string path, char typechar,
     }
     if (paramid != 0) {
       const sinsp_evt_param *p = ev->get_param(paramid);
-      f->file.sid = *reinterpret_cast<int64_t *>(p->m_val);
+      f->file.sid =
+          static_cast<int64_t>(*reinterpret_cast<const uint32_t *>(p->m_val));
       printf("Openat %s, SID: %d\n", f->file.path.c_str(), f->file.sid);
       char *label = sc_get_ctx(f->file.sid);
       if (label != nullptr) {

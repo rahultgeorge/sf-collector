@@ -166,10 +166,14 @@ int64_t utils::getIntParam(sinsp_evt *ev, std::string pname) {
       case PT_INT32:
       case PT_FLAGS8:
       case PT_FLAGS16:
-      case PT_FLAGS32:
-      case PT_SID: {
+      case PT_FLAGS32: {
         const sinsp_evt_param *p = ev->get_param(i);
         return *reinterpret_cast<int64_t *>(p->m_val);
+      }
+      case PT_SID: {
+        const sinsp_evt_param *p = ev->get_param(i);
+        return static_cast<int64_t>(
+            *reinterpret_cast<const uint32_t *>(p->m_val));
       }
       default:
         return 0;

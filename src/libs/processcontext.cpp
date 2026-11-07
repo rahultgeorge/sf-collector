@@ -75,7 +75,8 @@ ProcessObj *ProcessContext::createProcess(sinsp_threadinfo *ti, sinsp_evt *ev,
            mainthread->m_exepath.c_str(), n);
     if (n >= 28) {
       const sinsp_evt_param *param = ev->get_param(27);
-      p->proc.sid = *reinterpret_cast<int64_t *>(param->m_val);
+      p->proc.sid =
+          static_cast<int64_t>(*reinterpret_cast<const uint32_t *>(param->m_val));
       printf("Execve(28) %s, %s, SID: %d\n", mainthread->m_exe.c_str(),
              mainthread->m_exepath.c_str(), p->proc.sid);
       char *label = sc_get_ctx(p->proc.sid);
@@ -88,7 +89,8 @@ ProcessObj *ProcessContext::createProcess(sinsp_threadinfo *ti, sinsp_evt *ev,
     }
     if (n >= 29) {
       const sinsp_evt_param *param = ev->get_param(28);
-      p->proc.proc_sid = *reinterpret_cast<int64_t *>(param->m_val);
+      p->proc.proc_sid =
+          static_cast<int64_t>(*reinterpret_cast<const uint32_t *>(param->m_val));
       printf("Execve(29) %s, %s, SID: %d\n", mainthread->m_exe.c_str(),
              mainthread->m_exepath.c_str(), p->proc.proc_sid);
       char *label = sc_get_ctx(p->proc.proc_sid);
@@ -458,7 +460,8 @@ void ProcessContext::updateProcess(Process *proc, sinsp_evt *ev,
            mainthread->m_exepath.c_str(), n);
     if (n >= 28) {
       const sinsp_evt_param *param = ev->get_param(27);
-      proc->sid = *reinterpret_cast<int64_t *>(param->m_val);
+      proc->sid =
+          static_cast<int64_t>(*reinterpret_cast<const uint32_t *>(param->m_val));
       printf("Execve(28) %s, %s, SID: %d\n", mainthread->m_exe.c_str(),
              mainthread->m_exepath.c_str(), proc->sid);
       proc->selabel.clear();
@@ -473,7 +476,8 @@ void ProcessContext::updateProcess(Process *proc, sinsp_evt *ev,
     }
     if (n >= 29) {
       const sinsp_evt_param *param = ev->get_param(28);
-      proc->proc_sid = *reinterpret_cast<int64_t *>(param->m_val);
+      proc->proc_sid =
+          static_cast<int64_t>(*reinterpret_cast<const uint32_t *>(param->m_val));
       printf("Execve(29) %s, %s, PROC_SID: %d\n", mainthread->m_exe.c_str(),
              mainthread->m_exepath.c_str(), proc->proc_sid);
       char *label = sc_get_ctx(proc->proc_sid);
